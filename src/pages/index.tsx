@@ -1,31 +1,83 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
 
 import { api } from '~/utils/api';
 
 const NavLogo: React.FC = () => <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
-<path
-  clipRule="evenodd"
-  d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-  fill="currentColor"
-  fillRule="evenodd"
-/>
+	<path
+		clipRule="evenodd"
+		d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
+		fill="currentColor"
+		fillRule="evenodd"
+	/>
 </svg>
 
+/**
+ * Navbar
+ * @author Arnab Ghosh
+ * @date 1/13/2024
+ * @returns React component of Navbar
+ */
 const Nav: React.FC = () => {
+	/**
+	 * Structural representation of a Navbar Page
+	 * Includes the name of the page, its location, and if authentication is required
+	 */
+	class NavbarPage {
+		name: string;
+		location: string;
+		authed: boolean;
+
+		constructor(name: string, location: string, authed: boolean) {
+			this.name = name;
+			this.location = location;
+			this.authed = authed;
+		}
+	}
+
+	// Are we authenticated? 
+	const { data: session } = useSession();
+	const authed = !!session;
+
+	// List of pages that we can navigate to
+	const pages = [
+		new NavbarPage("Dashboard", "dashboard", true),
+		new NavbarPage("Settings", "settings", true), 
+		new NavbarPage("Add Link", "link", true), 
+		new NavbarPage("Home", "#", false),
+		new NavbarPage("About", "about", false),
+		new NavbarPage("Pricing", "pricing", false)
+	]
+
 	return (
 		<Navbar>
 			<NavbarBrand>
 				<NavLogo />
 				<p className="font-bold text-inherit">Quandry</p>
 			</NavbarBrand>
-			<NavbarContent>
-
+			<NavbarContent className="hidden sm:flex gap-4" justify="center">
+				{pages.map(page => (authed && page.authed || !page.authed ) &&  // TODO: Insert Current Page Logic
+				// We should highlight what the current page is
+					<NavbarItem>
+						<Link color="foreground" href={page.location}>
+							{page.name}
+						</Link>
+					</NavbarItem>
+				)}
 			</NavbarContent>
-
-
+			{ /* The authentication links */ }
+			<NavbarContent justify="end">
+				<NavbarItem className="hidden lg:flex">
+					<Link href="#">Login</Link>
+				</NavbarItem>
+				<NavbarItem>
+					<Button as={Link} color="primary" href="#" variant="flat">
+						Sign Up
+					</Button>
+				</NavbarItem>
+			</NavbarContent>
 		</Navbar>
 	)
 }
@@ -44,33 +96,5 @@ export default function Home() {
 				<h1 className="text-3xl text-slate-700 p-5">Quandry</h1>
 			</main>
 		</>
-	);
-}
-
-function AuthShowcase() {
-	const { data: sessionData } = useSession();
-
-	const { data: secretMessage } = api.post.getSecretMessage.useQuery(
-		undefined, // no input
-		{ enabled: sessionData?.user !== undefined }
-	);
-
-	return (
-		<div className="flex flex-col items-center justify-center gap-4">
-			<p className="text-center text-2xl text-white">
-				{sessionData && (
-					<span>Logged in as {sessionData.user?.name}</span>
-				)}
-				{secretMessage && <span> - {secretMessage}</span>}
-			</p>
-			<button
-				className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-				onClick={
-					sessionData ? () => void signOut() : () => void signIn()
-				}
-			>
-				{sessionData ? 'Sign out' : 'Sign in'}
-			</button>
-		</div>
 	);
 }
