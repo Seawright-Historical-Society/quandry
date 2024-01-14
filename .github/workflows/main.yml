@@ -1,0 +1,38 @@
+            - name: Netlify Actions
+  # You may pin to the exact commit or the version.
+  # uses: nwtgck/actions-netlify@7a92f00dde8c92a5a9e8385ec2919775f7647352
+  uses: nwtgck/actions-netlify@v2.1.0
+  with:
+    # Publish directory
+    publish-dir: 
+    # Functions directory
+    functions-dir: # optional
+    # Custom deploy message for Netlify
+    deploy-message: # optional
+    # GitHub token
+    github-token: # optional
+    # Production branch
+    production-branch: # optional
+    # Indicate whether to deploy production build
+    production-deploy: # optional
+    # Enable pull request comment
+    enable-pull-request-comment: # optional
+    # Enable commit comment
+    enable-commit-comment: # optional
+    # Enable GitHub commit status
+    enable-commit-status: # optional
+    # Overwrites pull request comment
+    overwrites-pull-request-comment: # optional
+    # Path to netlify.toml
+    netlify-config-path: # optional
+    # Specifies the prefix for the deployment URL
+    alias: # optional
+    # Whether or not to deploy to GitHub
+    enable-github-deployment: # optional
+    # Environment name of GitHub Deployments
+    github-deployment-environment: # optional
+    # Description of the GitHub Deployment
+    github-deployment-description: # optional
+    # Fails if no credentials provided
+    fails-without-credentials: # optional
+          
