@@ -18,7 +18,7 @@ export default function Link() {
 
     const createCard = async () => {
         console.log({ path, alias, password })
-        await mutation.mutate({ path, alias, password});
+        mutation.mutate({ path, alias, password});
         if(mutation?.data) {
             // Successful card creation
             const card = mutation.data;

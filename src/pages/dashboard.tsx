@@ -9,7 +9,7 @@ export default function Dashboard() {
     
     useEffect(() => {
         // Are we authenticated? 
-        if(!session) router.push("/auth/login")
+        if(!session) void router.push("/auth/login")
     }, []);
 
     return (

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 export default function Login() {
     const {data: session} = useSession();
     const router = useRouter();
-    if(session) router.push("/dashboard");
+    if(session) void router.push("/dashboard");
 
     return (
         <>
