@@ -1,2 +1,2 @@
-# Foundry
+# Quandry
 Password Protected URL shortener
