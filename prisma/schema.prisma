@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "cockroachdb"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -15,7 +15,7 @@ datasource db {
 }
 
 model URL {
-    id  Int @id @default(autoincrement())
+    id  Int @id @default(sequence())
     alias String
     path String
     password String
