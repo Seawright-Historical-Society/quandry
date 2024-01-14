@@ -7,6 +7,7 @@ import { api } from '~/utils/api';
 import {NextUIProvider} from "@nextui-org/react";
 import Link from 'next/link';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@nextui-org/react";
+import { signOut } from 'next-auth/react';
 
 
 import '~/styles/globals.css';
@@ -66,7 +67,7 @@ const Nav: React.FC = () => {
 			<NavbarContent className="hidden sm:flex gap-4" justify="center">
 				{pages.map(page => (authed && page.authed || !page.authed) &&  // TODO: Insert Current Page Logic
 					// We should highlight what the current page is
-					<NavbarItem>
+					<NavbarItem key={page.location}>
 						<Link color="foreground" href={page.location}>
 							{page.name}
 						</Link>
@@ -77,18 +78,12 @@ const Nav: React.FC = () => {
 			<NavbarContent justify="end">
 				{authed ? 
 				<NavbarItem className="hidden lg:flex">
-					 <Button color="primary">Signout</Button>
+					 <Button color="primary" onClick={() => signOut()}>Signout</Button>
 				</NavbarItem> :
-				<>
-					<NavbarItem className="hidden lg:flex">
-						<Button as={Link} color="primary" variant="bordered" href="/auth/login">Login</Button>
-					</NavbarItem>
-					<NavbarItem>
-						<Button as={Link} color="primary" href="/auth/signup" variant="flat">
-							Sign Up
-						</Button>
-					</NavbarItem>
-				</>}
+				<NavbarItem className="hidden lg:flex">
+					<Button as={Link} color="primary" variant="bordered" href="/auth/login">Login</Button>
+				</NavbarItem>
+				}
 
 			</NavbarContent>
 		</Navbar>

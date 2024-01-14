@@ -26,6 +26,10 @@ model Post {
     @@index([name])
 }
 
+model URL {
+    id  Int @id
+}
+
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
