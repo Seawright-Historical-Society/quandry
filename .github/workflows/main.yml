@@ -1,12 +1,15 @@
 on: push
-name: Publish docs if changed
+name: Publish on Netlify
+
 jobs:
-  checkChangesInDocs:
-    name: Check changes in docs
+  publish:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@master
-    - name: Check changes in stories
-      uses: netlify/actions/diff-includes@master
-      with:
-        args: docs
+
+    - name: Publish
+      uses: netlify/actions/build@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
