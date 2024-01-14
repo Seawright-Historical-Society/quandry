@@ -16,13 +16,15 @@ export default function Link() {
 
     const [shortenedURL, setShortenedURL] = useState("");
 
+    const generateURL = (id: string | number) => `https://localhost:3000/key/${id}`
+
     const createCard = async () => {
         console.log({ path, alias, password })
         mutation.mutate({ path, alias, password});
         if(mutation?.data) {
             // Successful card creation
             const card = mutation.data;
-            setShortenedURL(`https://localhost:3000/key/${card.id}`)
+            setShortenedURL(generateURL(card.id))
             console.log(card);
         }
     }
