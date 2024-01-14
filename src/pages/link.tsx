@@ -16,7 +16,7 @@ export default function Link() {
 
     const [shortenedURL, setShortenedURL] = useState("");
 
-    const generateURL = (id: string | number) => `https://localhost:3000/key/${id}`
+    const generateURL = (id: string | number) => `http://quandry.dearclarent.com/key/${id}`
 
     const createCard = async () => {
         console.log({ path, alias, password })
