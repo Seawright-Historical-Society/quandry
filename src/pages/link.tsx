@@ -13,6 +13,7 @@ export default function Link() {
     const [path, setPath] = useState("");
     const [alias, setAlias] = useState("");
     const [password, setPassword] = useState("");
+    const [hint, setHint] = useState("");
 
     const [shortenedURL, setShortenedURL] = useState("");
 
@@ -20,7 +21,7 @@ export default function Link() {
 
     const createCard = async () => {
         console.log({ path, alias, password })
-        mutation.mutate({ path, alias, password});
+        mutation.mutate({ path, alias, password, hint });
         if(mutation?.data) {
             // Successful card creation
             const card = mutation.data;
@@ -42,6 +43,7 @@ export default function Link() {
                         <Input className="px-3 py-3" type="text" label="URL to Encode" value={path} onChange={(e) => setPath(e.target.value)} variant="bordered" placeholder="https://google.com" isClearable />
                         <Input className="px-3 py-3" type="text" label="Alias or Label" value={alias} onChange={e => setAlias(e.target.value)} variant="bordered" placeholder="My Secret Link for Valentines Day" isClearable />
                         <Input className="px-3 py-3" type="text" label="Password" value={password} onChange={e => setPassword(e.target.value)} variant="bordered" placeholder="SuperSecretPassword123" isClearable />
+                        <Input className="px-3 py-3" type="text" label="Hint" value={hint} onChange={e => setHint(e.target.value)} variant="bordered" placeholder="Cyber Security Expert..." isClearable />
                     </div>
                     <Button color="primary" className="my-3 mx-6" onClick={createCard}> Generate </Button>
                 </CardBody>

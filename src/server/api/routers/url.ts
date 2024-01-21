@@ -8,7 +8,7 @@ import {
 
 export const urlRouter = createTRPCRouter({
     create: protectedProcedure
-        .input(z.object({ alias: z.string(), path: z.string(), password: z.string() }))
+        .input(z.object({ alias: z.string(), path: z.string(), password: z.string(), hint: z.string() }))
         .mutation(async ({ ctx, input }) => {
             // Ensure URL doesn't already exist
             const existing = await ctx.db.uRL.findFirst({ where: { alias: input.alias, ownerId: ctx.session.user.id }});
@@ -20,7 +20,8 @@ export const urlRouter = createTRPCRouter({
                     alias: input.alias,
                     path: input.path,
                     password: input.password,
-                    owner: { connect: { id: ctx.session.user.id } }
+                    owner: { connect: { id: ctx.session.user.id } },
+                    hint: input.hint
                 }
             });
             return url;
@@ -73,6 +74,16 @@ export const urlRouter = createTRPCRouter({
             // Continue onward, validate the password
             const validPassword = page.password === input.password;
             if(validPassword) return page;
+        }),
+    getHint: publicProcedure
+        .input(z.object({ id: z.string() }))
+        .query(async ({ ctx, input }) => {
+             // Get the page
+             const page = await ctx.db.uRL.findFirst({ where: { id: parseInt(input.id)}});
+             // If the page is valid, continue
+             if(!page) return;
+             // Continue onward, get the hint
+             return page.hint;
         }),
 
 

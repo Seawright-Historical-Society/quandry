@@ -9,8 +9,9 @@ export default function URL() {
     const [password, setPassword] = useState("");
     const id: string = router.query.id?.toString() ?? "";
 
-    const auth = api.url.authenticate.useQuery({ id, password }, { enabled: false});
+    const auth = api.url.authenticate.useQuery({ id, password }, { enabled: false });
     const query = api.url.isValid.useQuery({ id });
+    const hintQuery = api.url.getHint.useQuery({ id });
 
     const openLock = async () => {
         const data = (await auth.refetch()).data;
@@ -21,7 +22,7 @@ export default function URL() {
         <div>
             {query.data?.success && <>
                 <Header>Lock</Header>
-                <Input className="w-96 py-3" type="text" label="Password" placeholder="The lock beckons for your input..." value={password} onChange={e => setPassword(e.target.value)} />
+                <Input className="w-96 py-3" type="text" label="Password" placeholder={`Hint: ${hintQuery.data?.toString()}`} value={password} onChange={e => setPassword(e.target.value)} />
                 <Button color="primary" onClick={openLock}>Open the Lock...</Button>
             </>}
             {!query.data?.success && <>

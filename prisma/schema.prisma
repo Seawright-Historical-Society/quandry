@@ -19,6 +19,7 @@ model URL {
     alias String
     path String
     password String
+    hint String
     owner User @relation(fields: [ownerId], references: [id])
     ownerId String
 }
