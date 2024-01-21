@@ -1,4 +1,11 @@
 import React from "react";
+import { Courier_Prime } from "next/font/google"
+
+const CourierPrime = Courier_Prime({
+    subsets: ['latin'],
+    weight: "400",
+    variable: '--font-courier'
+});
 
 type Props = {
     children: React.ReactNode;
@@ -18,4 +25,5 @@ const StyledComponent = (classes: string) => {
 }
 
 export const Header: React.FC<Props> = StyledComponent('text-3xl text-bold p-3');
+export const HistoricHeader: React.FC<Props> = StyledComponent(`text-3xl text-bold p-3 font-mono ${CourierPrime.variable}`)
 export const SubHeader = StyledComponent('text-2xl p-3')

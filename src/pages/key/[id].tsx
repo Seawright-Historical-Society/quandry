@@ -1,8 +1,18 @@
 import { Button, Input } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { Header } from "~/components/typography";
+import Image from "next/image"
+import { Header, HistoricHeader } from "~/components/typography";
+import accessRestricted from "public/access_restricted.png"
 import { api } from "~/utils/api";
+import { Courier_Prime } from "next/font/google"
+
+const CourierPrime = Courier_Prime({
+    subsets: ['latin'],
+    weight: "400",
+    variable: '--font-courier'
+});
+
 
 export default function URL() {
     const router = useRouter();
@@ -19,11 +29,13 @@ export default function URL() {
     }
 
     return (
-        <div>
+        <div className={`flex flex-col justify-evenly items-center p-3 h-screen w-screen font-mono ${CourierPrime.variable}`}>
             {query.data?.success && <>
-                <Header>Lock</Header>
-                <Input className="w-96 py-3" type="text" label="Password" placeholder={`Hint: ${hintQuery.data?.toString()}`} value={password} onChange={e => setPassword(e.target.value)} />
-                <Button color="primary" onClick={openLock}>Open the Lock...</Button>
+                <HistoricHeader>Access restricted. Please enter the passcode to continue. </HistoricHeader>
+                <Image src={accessRestricted} alt={"Access Restrictred"} height={500} width={500}/>
+                <p>Hint: {hintQuery.data?.toString()}</p>
+                <input className="p-3 inline-flex border-2 border-black" type="text" value={password} onChange={e => setPassword(e.target.value)} />
+                <button className="bg-slate-800 text-white p-3 inline-flex" onClick={openLock}>Open the Lock...</button>
             </>}
             {!query.data?.success && <>
                 <Header>Empty Lock</Header>

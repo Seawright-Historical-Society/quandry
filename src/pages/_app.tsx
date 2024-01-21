@@ -4,13 +4,14 @@ import { type AppType } from 'next/app';
 import { useSession } from 'next-auth/react';
 import { Page } from '~/components/page';
 import { api } from '~/utils/api';
-import {NextUIProvider} from "@nextui-org/react";
+import { NextUIProvider } from "@nextui-org/react";
 import Link from 'next/link';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@nextui-org/react";
 import { signOut } from 'next-auth/react';
 
 
 import '~/styles/globals.css';
+import { useRouter } from 'next/router';
 
 const NavLogo: React.FC = () => <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
 	<path
@@ -77,12 +78,12 @@ const Nav: React.FC = () => {
 			{ /* The authentication links */}
 			<NavbarContent justify="end">
 				{authed ? 
-				<NavbarItem className="hidden lg:flex">
-					 <Button color="primary" onClick={() => signOut()}>Signout</Button>
-				</NavbarItem> :
-				<NavbarItem className="hidden lg:flex">
-					<Button as={Link} color="primary" variant="bordered" href="/auth/login">Login</Button>
-				</NavbarItem>
+					<NavbarItem className="hidden lg:flex">
+						<Button color="primary" onClick={() => signOut()}>Signout</Button>
+					</NavbarItem> :
+					<NavbarItem className="hidden lg:flex">
+						<Button as={Link} color="primary" variant="bordered" href="/auth/login">Login</Button>
+					</NavbarItem>
 				}
 
 			</NavbarContent>
@@ -94,12 +95,23 @@ const MyApp: AppType<{ session: Session | null }> = ({
 	Component,
 	pageProps: { session, ...pageProps },
 }) => {
+	const router = useRouter();
+
+	if(router.asPath.includes("key")) {
+		return (
+			<SessionProvider session={session}>
+			<NextUIProvider>
+				<Component {...pageProps} />
+			</NextUIProvider>
+		</SessionProvider>
+		)
+	}
 	return (
 		<SessionProvider session={session}>
 			<NextUIProvider>
 				<Nav />
 				<Page>
-				<Component {...pageProps} />
+					<Component {...pageProps} />
 				</Page>
 			</NextUIProvider>
 		</SessionProvider>
