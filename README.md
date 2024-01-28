@@ -3,6 +3,12 @@ Password Protected URL shortener
 ## Deployment
 This is currently deployed on Netlify [here](https://dapper-snickerdoodle-33aacf.netlify.app). 
 ## Contributing
+  1. Install NodeJS and npm
+  2. Install pnpm
+  3. ``git clone`` this repo
+  4. run ``pnpm i`` to install dependencies
+  5. Fill in environment variables
+  6. run ``pnpm dev`` to test
 ### Stack
 We currently use the Create-T3-App Stack [here](https://create.t3.gg/)
 - Typescript as the language, full-stack
