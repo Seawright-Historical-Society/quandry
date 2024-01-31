@@ -34,7 +34,7 @@ export const urlRouter = createTRPCRouter({
             return { success: true }
         }),
     getAll: protectedProcedure
-        .query(async ({ ctx, input }) => {
+        .query(async ({ ctx }) => {
             // Get all the URLS by the current user
             const userId = ctx.session.user.id;
             const urls = await ctx.db.uRL.findMany({ where: { ownerId: userId } })
