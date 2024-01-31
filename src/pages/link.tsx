@@ -49,7 +49,7 @@ export default function Link() {
                 </CardBody>
                 <CardFooter>
                     <div className="p-3 text-blue-700">
-                        <Input className="px-3" type="text" value={shortenedURL} label="Shortened URL" variant="bordered" isReadOnly={true} />
+                        <Input className="px-3 w-80" type="text" value={shortenedURL} label="Shortened URL" variant="bordered" isReadOnly={true} />
                     </div>
                 </CardFooter>
             </Card>
