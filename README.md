@@ -1,7 +1,7 @@
 # Quandry
 Password Protected URL shortener
 ## Deployment
-This is currently deployed on Netlify [here](https://dapper-snickerdoodle-33aacf.netlify.app). 
+This is currently deployed on AWS Amplify [here](https://quandry.dearclarent.com). 
 ## Contributing
   1. Install NodeJS and npm
   2. Install pnpm
