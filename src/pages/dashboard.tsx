@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Header } from "~/components/typography";
 import { api } from "~/utils/api";
-import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Textarea, getKeyValue } from "@nextui-org/react";
 import Link from "next/link";
 import { url } from "inspector";
 
@@ -33,7 +33,7 @@ export default function Dashboard() {
         alias: url.alias,
         path: <span className="text-blue-300"><Link href={url.path}>{url.path}</Link></span>,
         url: <span className="text-blue-300"><Link href={`https://quandry.dearclarent.com/key/${url.id}`}>{`https://quandry.dearclarent.com/key/${url.id}`}</Link></span>,
-        hint: url.hint,
+        hint: <Textarea isReadOnly variant="bordered" defaultValue={url.hint} />,
         actions: <> <Button color="secondary">Edit</Button> <Button  onClick={() => deleteUrlEvent(url.id) } color="danger">{deleteUrl.isLoading ? "Loading..." : "Delete"}</Button></>
     }));
 

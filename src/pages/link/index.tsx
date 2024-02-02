@@ -8,6 +8,7 @@ import { api } from "~/utils/api";
 export default function Link() {
     const {data: session} = useSession();
     const mutation = api.url.create.useMutation();
+    const router = useRouter();
 
     // State
     const [path, setPath] = useState("");
