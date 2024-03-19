@@ -14,6 +14,9 @@ export const urlRouter = createTRPCRouter({
             const existing = await ctx.db.uRL.findFirst({ where: { alias: input.alias, ownerId: ctx.session.user.id }});
             if(existing) throw new Error("Already exists")
 
+            // Ensure none of the fields are blank
+            if(input.alias === "" || input.path === "" || input.password === "" || input.hint === "") throw new Error("Fields cannot be blank");
+
             // Create a URL 
             const url = await ctx.db.uRL.create({
                 data: {
@@ -31,7 +34,7 @@ export const urlRouter = createTRPCRouter({
         .mutation(async ({ ctx, input }) => {
             // Update
             // First, check if the fields given are blank, and if so, throw an error
-            if(input.alias === "" || input.path === "" || input.password === "") throw new Error("Fields cannot be blank");
+            if(input.alias === "" || input.path === "" || input.password === "" || input.hint === "") throw new Error("Fields cannot be blank");
             await ctx.db.uRL.update({ where: { id: parseInt(input.id) }, data: { alias: input.alias, path: input.path, password: input.password, hint: input.hint } });
             return { success: true }
         }),

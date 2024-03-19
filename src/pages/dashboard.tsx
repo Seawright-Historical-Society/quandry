@@ -34,6 +34,7 @@ export default function Dashboard() {
         path: <span className="text-blue-300"><Link href={url.path}>{url.path}</Link></span>,
         url: <span className="text-blue-300"><Link href={`https://quandry.dearclarent.com/key/${url.id}`}>{`https://quandry.dearclarent.com/key/${url.id}`}</Link></span>,
         hint: <Textarea isReadOnly variant="bordered" defaultValue={url.hint} />,
+        password: <Textarea isReadOnly variant="bordered" defaultValue={url.password} />,
         actions: <> <Link href={`/link/${url.id}`}><Button color="secondary">Edit</Button></Link> <Button  onClick={() => deleteUrlEvent(url.id) } color="danger">{deleteUrl.isLoading ? "Loading..." : "Delete"}</Button></>
     }));
 
@@ -53,6 +54,10 @@ export default function Dashboard() {
         {
             key: "hint",
             label: "Hint",
+        },
+        {
+            key: "password",
+            label: "Password"
         },
         {
             key: "actions",

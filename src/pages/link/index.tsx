@@ -38,11 +38,12 @@ export default function Link() {
                         <Input className="px-3 py-3" type="text" label="Password" value={password} onChange={e => setPassword(e.target.value)} variant="bordered" placeholder="SuperSecretPassword123" isClearable />
                         <Input className="px-3 py-3" type="text" label="Hint" value={hint} onChange={e => setHint(e.target.value)} variant="bordered" placeholder="Cyber Security Expert..." isClearable />
                     </div>
-                    <Button color="primary" className="my-3 mx-6" onClick={createCard}> Generate </Button>
+                    <Button color={mutation.isSuccess ? "success" : "primary" } className="my-3 mx-6" onClick={createCard}> {mutation.isSuccess ? "Generated Successfully!" : "Generate"} </Button>
                 </CardBody>
                 <CardFooter>
                     <div className="p-3 text-blue-700">
-                        <Input className="px-3 w-80" type="text" value={generateURL(mutation.data?.id)} label="Shortened URL" variant="bordered" isReadOnly={true} />
+                        <Input className="px-3 mb-3 w-80" type="text" value={generateURL(mutation.data?.id)} label="Shortened URL" variant="bordered" isReadOnly={true} />
+                        { mutation.error && <p className="text-red-700"> { mutation.error.message } </p>}
                     </div>
                 </CardFooter>
             </Card>
