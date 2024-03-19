@@ -21,16 +21,18 @@ export const urlRouter = createTRPCRouter({
                     path: input.path,
                     password: input.password,
                     owner: { connect: { id: ctx.session.user.id } },
-                    hint: input.hint
+                    hint: input.hint 
                 }
             });
             return url;
         }),
     update: protectedProcedure
-        .input(z.object({ alias: z.string(), path: z.string(), password: z.string(), id: z.string() }))
+        .input(z.object({ alias: z.string(), path: z.string(), password: z.string(), id: z.string(), hint: z.string()}))
         .mutation(async ({ ctx, input }) => {
             // Update
-            await ctx.db.uRL.update({ where: { id: parseInt(input.id) }, data: { alias: input.alias, path: input.path, password: input.password } });
+            // First, check if the fields given are blank, and if so, throw an error
+            if(input.alias === "" || input.path === "" || input.password === "") throw new Error("Fields cannot be blank");
+            await ctx.db.uRL.update({ where: { id: parseInt(input.id) }, data: { alias: input.alias, path: input.path, password: input.password, hint: input.hint } });
             return { success: true }
         }),
     getAll: protectedProcedure

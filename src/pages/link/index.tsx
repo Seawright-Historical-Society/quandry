@@ -16,19 +16,11 @@ export default function Link() {
     const [password, setPassword] = useState("");
     const [hint, setHint] = useState("");
 
-    const [shortenedURL, setShortenedURL] = useState("");
-
-    const generateURL = (id: string | number) => `http://quandry.dearclarent.com/key/${id}`
+    const generateURL = (id: string | number | undefined): string => id ? `http://quandry.dearclarent.com/key/${id}` : ""
 
     const createCard = async () => {
         console.log({ path, alias, password })
         mutation.mutate({ path, alias, password, hint });
-        if(mutation?.data) {
-            // Successful card creation
-            const card = mutation.data;
-            setShortenedURL(generateURL(card.id))
-            console.log(card);
-        }
     }
 
 
@@ -50,7 +42,7 @@ export default function Link() {
                 </CardBody>
                 <CardFooter>
                     <div className="p-3 text-blue-700">
-                        <Input className="px-3 w-80" type="text" value={shortenedURL} label="Shortened URL" variant="bordered" isReadOnly={true} />
+                        <Input className="px-3 w-80" type="text" value={generateURL(mutation.data?.id)} label="Shortened URL" variant="bordered" isReadOnly={true} />
                     </div>
                 </CardFooter>
             </Card>
