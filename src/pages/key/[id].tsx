@@ -30,14 +30,18 @@ export default function URL() {
 
     return (
         <div className={`flex flex-col justify-evenly items-center p-3 h-screen w-screen font-mono ${CourierPrime.variable}`}>
-            {query.data?.success && <>
+            {query.status == "success" && <>
                 <HistoricHeader>Access restricted. Please enter the passcode to continue. </HistoricHeader>
                 <Image src={accessRestricted} alt={"Access Restrictred"} height={500} width={500}/>
                 <p>Hint: {hintQuery.data?.toString()}</p>
                 <input className="p-3 inline-flex border-2 border-black" type="text" value={password} onChange={e => setPassword(e.target.value)} />
                 <button className="bg-slate-800 text-white p-3 inline-flex" onClick={openLock}>Open the Lock...</button>
             </>}
-            {!query.data?.success && <>
+            {query.status == "loading" && <>
+                <Header>Empty Lock</Header>
+                <p className="text-md"><span className="text-red-500">Nothing</span> to see here...</p>
+            </>}
+            {query.status == "error" && <>
                 <Header>Empty Lock</Header>
                 <p className="text-md"><span className="text-red-500">Nothing</span> to see here...</p> 
             </>}
